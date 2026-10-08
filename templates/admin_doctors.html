@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Админ-панель — Врачи{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="section-title">Управление врачами</h1>
+
+        <div class="center" style="margin-bottom: 30px;">
+            <a href="{{ url_for('admin') }}" class="btn btn-outline">Заявки</a>
+            <a href="{{ url_for('admin_doctors') }}" class="btn btn-primary">Врачи</a>
+            <a href="{{ url_for('admin_services') }}" class="btn btn-outline">Услуги</a>
+        </div>
+
+        <div class="form-card">
+            <h2>Добавить врача</h2>
+            <form method="POST" action="{{ url_for('admin_doctors') }}">
+                <div class="form-group">
+                    <label>ФИО *</label>
+                    <input type="text" name="full_name" required placeholder="Иванов Иван Иванович">
+                </div>
+                <div class="form-group">
+                    <label>Специализация *</label>
+                    <input type="text" name="specialization" required placeholder="Терапевт">
+                </div>
+                <div class="form-group">
+                    <label>Стаж (лет) *</label>
+                    <input type="number" name="experience" required min="0" placeholder="10">
+                </div>
+                <div class="form-group">
+                    <label>Описание</label>
+                    <textarea name="description" placeholder="Краткая информация о враче"></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Добавить врача</button>
+            </form>
+        </div>
+
+        <h2 style="margin: 40px 0 20px;">Список врачей ({{ doctors|length }})</h2>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>ФИО</th>
+                        <th>Специализация</th>
+                        <th>Стаж</th>
+                        <th>Описание</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for d in doctors %}
+                    <tr>
+                        <td>{{ d['id'] }}</td>
+                        <td>{{ d['full_name'] }}</td>
+                        <td>{{ d['specialization'] }}</td>
+                        <td>{{ d['experience'] }} лет</td>
+                        <td>{{ d['description'] or '—' }}</td>
+                        <td>
+                            <a href="{{ url_for('delete_doctor', id=d['id']) }}"
+                               class="btn btn-danger"
+                               onclick="return confirm('Удалить врача?')">Удалить</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

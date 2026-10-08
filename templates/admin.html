@@ -1,0 +1,62 @@
+{% extends "base.html" %}
+
+{% block title %}Админ-панель — Заявки{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="section-title">Админ-панель</h1>
+
+        <div class="center" style="margin-bottom: 30px;">
+            <a href="{{ url_for('admin') }}" class="btn btn-primary">Заявки</a>
+            <a href="{{ url_for('admin_doctors') }}" class="btn btn-outline">Врачи</a>
+            <a href="{{ url_for('admin_services') }}" class="btn btn-outline">Услуги</a>
+        </div>
+
+        <h2 style="margin-bottom: 20px;">Заявки на приём ({{ appointments|length }})</h2>
+
+        {% if appointments %}
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Имя</th>
+                        <th>Телефон</th>
+                        <th>Услуга</th>
+                        <th>Дата</th>
+                        <th>Комментарий</th>
+                        <th>Создана</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for a in appointments %}
+                    <tr>
+                        <td>{{ a['id'] }}</td>
+                        <td>{{ a['name'] }}</td>
+                        <td>{{ a['phone'] }}</td>
+                        <td>{{ a['service'] }}</td>
+                        <td>{{ a['date'] }}</td>
+                        <td>{{ a['comment'] or '—' }}</td>
+                        <td>{{ a['created_at'] }}</td>
+                        <td>
+                            <a href="{{ url_for('delete_appointment', id=a['id']) }}"
+                               class="btn btn-danger"
+                               onclick="return confirm('Удалить заявку?')">Удалить</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        {% else %}
+        <div class="table-wrap">
+            <p class="center" style="color:#718096;">Пока нет заявок. Оставьте заявку через форму «Записаться», чтобы проверить.</p>
+        </div>
+        {% endif %}
+    </div>
+</section>
+
+{% endblock %}

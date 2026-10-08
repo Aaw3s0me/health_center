@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Центр здоровья «Здоровье+»{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<header class="header">
+    <div class="container header-inner">
+        <a href="{{ url_for('index') }}" class="logo">
+            <span class="logo-icon">🏥</span>
+            <span>Здоровье<strong>+</strong></span>
+        </a>
+        <nav class="nav">
+    <a href="{{ url_for('index') }}">Главная</a>
+    <a href="{{ url_for('services') }}">Услуги</a>
+    <a href="{{ url_for('doctors') }}">Врачи</a>
+    <a href="{{ url_for('contacts') }}">Контакты</a>
+    {% if session.get('admin_logged_in') %}
+        <a href="{{ url_for('admin') }}" class="admin-link">Админ</a>
+        <a href="{{ url_for('logout') }}" class="admin-link">Выйти</a>
+    {% else %}
+        <a href="{{ url_for('login') }}" class="admin-link">Вход</a>
+    {% endif %}
+</nav>
+        <a href="{{ url_for('appointment') }}" class="btn btn-primary">Записаться</a>
+    </div>
+</header>
+
+<main>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div class="container">
+                {% for category, message in messages %}
+                    <div class="flash flash-{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+
+    {% block content %}{% endblock %}
+</main>
+
+<footer class="footer">
+    <div class="container footer-inner">
+        <div>
+            <h4>Центр здоровья «Здоровье+»</h4>
+            <p>Забота о вашем здоровье — наша главная цель.</p>
+        </div>
+        <div>
+            <h4>Контакты</h4>
+            <p>г. Волгоград, ул. Василевского, д. 4</p>
+            <p>+7 (495) 123-45-67</p>
+            <p>info@zdorovie-plus.ru</p>
+        </div>
+        <div>
+            <h4>Режим работы</h4>
+            <p>Пн–Пт: 8:00 – 20:00</p>
+            <p>Сб: 9:00 – 18:00</p>
+            <p>Вс: выходной</p>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <p>© 2026 Центр здоровья «Здоровье+». Все права защищены.</p>
+    </div>
+</footer>
+
+</body>
+</html>

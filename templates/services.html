@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Услуги — Центр здоровья «Здоровье+»{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="section-title">Наши услуги</h1>
+        <p class="center" style="margin-bottom: 40px; color:#4a5568;">
+            Нажмите на услугу, чтобы узнать подробнее
+        </p>
+
+        <div class="services-grid">
+            {% for service in services %}
+            <div class="service-card service-clickable"
+                 onclick="openServiceModal(
+                     '{{ service['name']|e }}',
+                     '{{ service['description']|e }}',
+                     '{{ (service['details'] or '')|e }}',
+                     '{{ service['price'] }}',
+                     '{{ service['duration'] }}'
+                 )">
+                <h3>{{ service['name'] }}</h3>
+                <p>{{ service['description'] }}</p>
+                <div class="service-meta">
+                    <span class="price">{{ service['price'] }} ₽</span>
+                    <span class="duration">{{ service['duration'] }} мин</span>
+                </div>
+                <p class="service-hint">Подробнее →</p>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="center" style="margin-top: 40px;">
+            <a href="{{ url_for('appointment') }}" class="btn btn-primary">Записаться на приём</a>
+        </div>
+    </div>
+</section>
+
+<!-- Модальное окно -->
+<div id="serviceModal" class="modal-overlay" onclick="closeServiceModal(event)">
+    <div class="modal-window" onclick="event.stopPropagation()">
+        <button class="modal-close" onclick="closeServiceModal()">×</button>
+        <h2 id="modalTitle"></h2>
+        <p id="modalShort" class="modal-short"></p>
+        <p id="modalDetails" class="modal-details"></p>
+        <div class="modal-meta">
+            <span id="modalPrice" class="price"></span>
+            <span id="modalDuration" class="duration"></span>
+        </div>
+        <a href="{{ url_for('appointment') }}" class="btn btn-primary" style="width:100%; margin-top:20px;">
+            Записаться на эту услугу
+        </a>
+    </div>
+</div>
+
+<script>
+function openServiceModal(name, short, details, price, duration) {
+    document.getElementById('modalTitle').textContent = name;
+    document.getElementById('modalShort').textContent = short;
+    document.getElementById('modalDetails').textContent = details || 'Подробное описание скоро появится.';
+    document.getElementById('modalPrice').textContent = price + ' ₽';
+    document.getElementById('modalDuration').textContent = duration + ' мин';
+    document.getElementById('serviceModal').classList.add('active');
+    document.body.style.overflow = 'hidden';
+}
+
+function closeServiceModal(event) {
+    if (event && event.target !== event.currentTarget) return;
+    document.getElementById('serviceModal').classList.remove('active');
+    document.body.style.overflow = '';
+}
+
+document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeServiceModal();
+});
+</script>
+
+{% endblock %}

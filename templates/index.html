@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+
+{% block title %}Главная — Центр здоровья «Здоровье+»{% endblock %}
+
+{% block content %}
+
+<!-- Баннер -->
+<section class="hero">
+    <div class="container hero-inner">
+        <div class="hero-text">
+            <h1>Современный центр здоровья для всей семьи</h1>
+            <p>Квалифицированные врачи, современное оборудование и внимательное отношение к каждому пациенту.</p>
+            <div class="hero-buttons">
+                <a href="{{ url_for('appointment') }}" class="btn btn-primary">Записаться на приём</a>
+                <a href="{{ url_for('services') }}" class="btn btn-outline">Наши услуги</a>
+            </div>
+        </div>
+        <div class="hero-image">🏥</div>
+    </div>
+</section>
+
+<!-- Преимущества -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Почему выбирают нас</h2>
+        <div class="features">
+            <div class="feature-card">
+                <div class="feature-icon">👨‍⚕️</div>
+                <h3>Опытные врачи</h3>
+                <p>Специалисты высшей категории со стажем 10 лет и более.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🔬</div>
+                <h3>Современное оборудование</h3>
+                <p>Точная диагностика на аппаратах последнего поколения.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">⏰</div>
+                <h3>Удобное время</h3>
+                <p>Работаем 6 дней в неделю, приём по записи без очередей.</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">💙</div>
+                <h3>Забота о пациентах</h3>
+                <p>Индивидуальный подход и внимание к каждому.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Наши услуги -->
+<section class="section section-alt">
+    <div class="container">
+        <h2 class="section-title">Популярные услуги</h2>
+        <div class="services-grid">
+            {% for service in services %}
+            <div class="service-card">
+                <h3>{{ service['name'] }}</h3>
+                <p>{{ service['description'] }}</p>
+                <div class="service-meta">
+                    <span class="price">{{ service['price'] }} ₽</span>
+                    <span class="duration">{{ service['duration'] }} мин</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="center">
+            <a href="{{ url_for('services') }}" class="btn btn-outline">Все услуги →</a>
+        </div>
+    </div>
+</section>
+
+<!-- Врачи -->
+<section class="section">
+    <div class="container">
+        <h2 class="section-title">Наши специалисты</h2>
+        <div class="doctors-grid">
+            {% for doctor in doctors %}
+            <div class="doctor-card">
+                <div class="doctor-avatar">👨‍⚕️</div>
+                <h3>{{ doctor['full_name'] }}</h3>
+                <p class="specialization">{{ doctor['specialization'] }}</p>
+                <p class="experience">Стаж: {{ doctor['experience'] }} лет</p>
+            </div>
+            {% endfor %}
+        </div>
+        <div class="center">
+            <a href="{{ url_for('doctors') }}" class="btn btn-outline">Все врачи →</a>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="cta">
+    <div class="container cta-inner">
+        <h2>Не откладывайте заботу о здоровье</h2>
+        <p>Запишитесь на приём онлайн — это займёт меньше минуты</p>
+        <a href="{{ url_for('appointment') }}" class="btn btn-primary">Записаться онлайн</a>
+    </div>
+</section>
+
+{% endblock %}

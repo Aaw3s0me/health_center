@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}Врачи — Центр здоровья «Здоровье+»{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="section-title">Наши специалисты</h1>
+        <p class="center" style="margin-bottom: 40px; color:#4a5568;">
+            Опытные врачи, готовые помочь вам и вашей семье
+        </p>
+
+        <div class="doctors-grid">
+            {% for doctor in doctors %}
+            <div class="doctor-card">
+                <div class="doctor-avatar">👨‍⚕️</div>
+                <h3>{{ doctor['full_name'] }}</h3>
+                <p class="specialization">{{ doctor['specialization'] }}</p>
+                <p class="experience">Стаж: {{ doctor['experience'] }} лет</p>
+                {% if doctor['description'] %}
+                <p style="color:#4a5568; font-size:14px; margin-top:10px;">
+                    {{ doctor['description'] }}
+                </p>
+                {% endif %}
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="center" style="margin-top: 40px;">
+            <a href="{{ url_for('appointment') }}" class="btn btn-primary">Записаться к врачу</a>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

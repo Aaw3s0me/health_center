@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Контакты — Центр здоровья «Здоровье+»{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="section-title">Контакты</h1>
+
+        <div class="features" style="margin-bottom: 50px;">
+            <div class="feature-card">
+                <div class="feature-icon">📍</div>
+                <h3>Адрес</h3>
+                <p>г. Волгоград, ул. Василевского, д. 4</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">📞</div>
+                <h3>Телефон</h3>
+                <p>+7 (495) 123-45-67</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">✉️</div>
+                <h3>Email</h3>
+                <p>info@zdorovie-plus.ru</p>
+            </div>
+            <div class="feature-card">
+                <div class="feature-icon">🕐</div>
+                <h3>Режим работы</h3>
+                <p>Пн–Пт: 8:00 – 20:00<br>Сб: 9:00 – 18:00<br>Вс: выходной</p>
+            </div>
+        </div>
+
+        <div class="form-card">
+            <h2>Как нас найти</h2>
+            <p class="center" style="color:#4a5568; margin-bottom: 20px;">
+                Мы находимся в советском районе, в 5 минутах от остановки "Автомобилистов".<br>
+                Рядом есть бесплатная парковка для пациентов.
+            </p>
+
+            <div class="map-container">
+                <iframe
+                    src="https://yandex.ru/map-widget/v1/?ll=44.430854%2C48.645190&z=16&pt=44.430854, 48.645190"
+                    width="100%"
+                    height="420"
+                    frameborder="0"
+                    allowfullscreen="true"
+                    style="border-radius:12px;">
+                </iframe>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

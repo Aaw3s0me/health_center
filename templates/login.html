@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Вход в админ-панель{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <div class="form-card" style="max-width: 420px;">
+            <h2 style="text-align:center;">Вход в админ-панель</h2>
+            <p class="center" style="color:#718096; margin-bottom: 24px;">
+                Доступ только для администратора сайта
+            </p>
+
+            <form method="POST" action="{{ url_for('login') }}">
+                <div class="form-group">
+                    <label>Логин</label>
+                    <input type="text" name="username" required autofocus placeholder="admin">
+                </div>
+                <div class="form-group">
+                    <label>Пароль</label>
+                    <input type="password" name="password" required placeholder="••••••••">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">
+                    Войти
+                </button>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
+Шаг 3. Обновляем templates/base.html — добавляем кнопку «Выйти»
+Открой base.html и найди блок с меню:
+
+html
+<nav class="nav">
+    <a href="{{ url_for('index') }}">Главная</a>
+    <a href="{{ url_for('services') }}">Услуги</a>
+    <a href="{{ url_for('doctors') }}">Врачи</a>
+    <a href="{{ url_for('contacts') }}">Контакты</a>
+    <a href="{{ url_for('admin') }}" class="admin-link">Админ</a>
+</nav>
+Замени этот блок целиком на:
+
+html
+<nav class="nav">
+    <a href="{{ url_for('index') }}">Главная</a>
+    <a href="{{ url_for('services') }}">Услуги</a>
+    <a href="{{ url_for('doctors') }}">Врачи</a>
+    <a href="{{ url_for('contacts') }}">Контакты</a>
+    {% if session.get('admin_logged_in') %}
+        <a href="{{ url_for('admin') }}" class="admin-link">Админ</a>
+        <a href="{{ url_for('logout') }}" class="admin-link">Выйти</a>
+    {% else %}
+        <a href="{{ url_for('login') }}" class="admin-link">Вход</a>
+    {% endif %}
+</nav>

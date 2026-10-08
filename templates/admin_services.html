@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Админ-панель — Услуги{% endblock %}
+
+{% block content %}
+
+<section class="section">
+    <div class="container">
+        <h1 class="section-title">Управление услугами</h1>
+
+        <div class="center" style="margin-bottom: 30px;">
+            <a href="{{ url_for('admin') }}" class="btn btn-outline">Заявки</a>
+            <a href="{{ url_for('admin_doctors') }}" class="btn btn-outline">Врачи</a>
+            <a href="{{ url_for('admin_services') }}" class="btn btn-primary">Услуги</a>
+        </div>
+
+        <div class="form-card">
+            <h2>Добавить услугу</h2>
+            <form method="POST" action="{{ url_for('admin_services') }}">
+                <div class="form-group">
+                    <label>Название *</label>
+                    <input type="text" name="name" required placeholder="Консультация терапевта">
+                </div>
+                <div class="form-group">
+                    <label>Краткое описание</label>
+                    <textarea name="description" placeholder="Одна строка для карточки"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Подробное описание</label>
+                    <textarea name="details" style="min-height: 130px;"
+                              placeholder="Развёрнутое описание, которое увидят в модальном окне"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Цена (₽) *</label>
+                    <input type="number" name="price" required min="0" step="1" placeholder="1500">
+                </div>
+                <div class="form-group">
+                    <label>Длительность (мин) *</label>
+                    <input type="number" name="duration" required min="0" placeholder="30">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width:100%;">Добавить услугу</button>
+            </form>
+        </div>
+
+        <h2 style="margin: 40px 0 20px;">Список услуг ({{ services|length }})</h2>
+
+        <div class="table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Название</th>
+                        <th>Краткое описание</th>
+                        <th>Цена</th>
+                        <th>Длительность</th>
+                        <th>Действие</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for s in services %}
+                    <tr>
+                        <td>{{ s['id'] }}</td>
+                        <td>{{ s['name'] }}</td>
+                        <td>{{ s['description'] or '—' }}</td>
+                        <td>{{ s['price'] }} ₽</td>
+                        <td>{{ s['duration'] }} мин</td>
+                        <td>
+                            <a href="{{ url_for('delete_service', id=s['id']) }}"
+                               class="btn btn-danger"
+                               onclick="return confirm('Удалить услугу?')">Удалить</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
